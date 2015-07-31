@@ -1,0 +1,23 @@
+name: Picturebook
+description: Chat filter that replaces keywords with definable replacements. Built for SpigotMC.
+author: Starza4TW
+website: transcendencegaming.net
+version: 1.1.0
+main: com.starza4tw.picturebook.Main
+commands:
+  picturebook:
+    description: Base Command for the Picturebook plugin.
+    usage: /picturebook
+    aliases: [pb]
+permissions:
+  picturebook.*:
+    description: Gives access to all commands found in Picturebook.
+    children:
+      picturebook.filter: true
+      picturebook.admin: true
+  picturebook.filter:
+    description: Replaces keywords with their given replacement.
+    default: true
+  picturebook.admin:
+    description: Allows players to use to /picturebook reload.
+    default: op

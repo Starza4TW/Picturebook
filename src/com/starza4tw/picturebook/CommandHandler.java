@@ -25,12 +25,12 @@ public class CommandHandler implements CommandExecutor
 		{
 			if(args.length == 0 || args[0].equalsIgnoreCase("help"))
 			{
-				if(sender.hasPermission("picturebook.filter") == true)
+				if(sender.hasPermission("picturebook.command") == true)
 				{
 					sender.sendMessage(new String[] {ChatColor.GOLD + "[Picturebook (pb) - Help]", ChatColor.BLUE + "/picturebook add [Filter] [Replacement] - " + ChatColor.WHITE + "Adds a filter for Picturebook to search for.", ChatColor.BLUE + "/picturebook list [Page] - " + ChatColor.WHITE + "Lists filtered words and their replacements.", ChatColor.BLUE + "/picturebook reload - " + ChatColor.WHITE + "Reloads Picturebook's config.", ChatColor.BLUE + "/picturebook remove [Filter] " + ChatColor.WHITE + "Removes a Filter from Picturebook's Filter List.", ChatColor.BLUE + "/picturebook version - " + ChatColor.WHITE + "Lists basic information about Picturebook."});
 					return true;
 				}
-				else if(sender.hasPermission("picturebook.filter") == false)
+				else if(sender.hasPermission("picturebook.command") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " You don't have the permission to do that!");
 					return true;
@@ -38,7 +38,7 @@ public class CommandHandler implements CommandExecutor
 			}
 			else if(args[0].equalsIgnoreCase("add"))
 			{
-				if(sender.hasPermission("picturebook.admin") == true)
+				if(sender.hasPermission("picturebook.add") == true)
 				{
 					if((args != null) && (args.length == 3))
 					{
@@ -56,7 +56,7 @@ public class CommandHandler implements CommandExecutor
 						return true;
 					}
 				}
-				else if(sender.hasPermission("picturebook.admin") == false)
+				else if(sender.hasPermission("picturebook.add") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
 					return true;
@@ -64,7 +64,7 @@ public class CommandHandler implements CommandExecutor
 			}
 			else if(args[0].equalsIgnoreCase("list"))
 			{
-				if(sender.hasPermission("picturebook.filter") == true)
+				if(sender.hasPermission("picturebook.list") == true)
 				{
 					if((args != null) && (args.length == 2))
 					{
@@ -116,7 +116,7 @@ public class CommandHandler implements CommandExecutor
 						return true;
 					}
 				}
-				else if(sender.hasPermission("picturebook.filter") == false)
+				else if(sender.hasPermission("picturebook.list") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
 					return true;
@@ -124,7 +124,7 @@ public class CommandHandler implements CommandExecutor
 			}
 			else if(args[0].equalsIgnoreCase("reload"))
 			{
-				if(sender.hasPermission("picturebook.admin") == true)
+				if(sender.hasPermission("picturebook.reload") == true)
 				{
 					plugin.reloadConfig();
 					ConfigHandler.FilterList.clear();
@@ -132,7 +132,7 @@ public class CommandHandler implements CommandExecutor
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Reloaded Configuration File.");
 					return true;
 				}
-				else if (sender.hasPermission("picturebook.admin") == false)
+				else if (sender.hasPermission("picturebook.reload") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
 					return true;
@@ -140,7 +140,7 @@ public class CommandHandler implements CommandExecutor
 			}
 			else if(args[0].equalsIgnoreCase("remove"))
 			{
-				if(sender.hasPermission("picturebook.filter") == true)
+				if(sender.hasPermission("picturebook.remove") == true)
 				{
 					if((args != null) && (args.length == 2))
 					{
@@ -154,11 +154,11 @@ public class CommandHandler implements CommandExecutor
 					}
 					else
 					{
-						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " Please list two arguments after the command!");
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " Please list an argument after the command!");
 						return true;
 					}
 				}
-				else if (sender.hasPermission("picturebook.filter") == false)
+				else if (sender.hasPermission("picturebook.remove") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
 					return true;
@@ -166,12 +166,12 @@ public class CommandHandler implements CommandExecutor
 			}
 			else if(args[0].equalsIgnoreCase("version"))
 			{
-				if(sender.hasPermission("picturebook.filter") == true)
+				if(sender.hasPermission("picturebook.version") == true)
 				{
 					sender.sendMessage(new String[] {ChatColor.GOLD + "[Picturebook - Version]", ChatColor.BLUE + "Version: " + ChatColor.WHITE + plugin.getDescription().getVersion(), ChatColor.BLUE + "Author(s): " + ChatColor.WHITE + plugin.getDescription().getAuthors(), ChatColor.BLUE + "Website: " + ChatColor.WHITE + plugin.getDescription().getWebsite()});
 					return true;
 				}
-				else if(sender.hasPermission("picturebook.filter") == false)
+				else if(sender.hasPermission("picturebook.version") == false)
 				{
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
 					return true;

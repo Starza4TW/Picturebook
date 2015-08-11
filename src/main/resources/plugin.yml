@@ -2,7 +2,7 @@ name: Picturebook
 description: Chat filter that replaces keywords with definable replacements. Built for SpigotMC.
 author: Starza4TW
 website: transcendencegaming.net
-version: 1.1.1
+version: 1.2.1
 main: com.starza4tw.picturebook.Main
 commands:
   picturebook:

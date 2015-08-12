@@ -2,7 +2,7 @@ name: Picturebook
 description: Chat filter that replaces keywords with definable replacements. Built for SpigotMC.
 author: Starza4TW
 website: transcendencegaming.net
-version: 1.2.1
+version: 1.2.2
 main: com.starza4tw.picturebook.Main
 commands:
   picturebook:
@@ -13,31 +13,31 @@ permissions:
   picturebook.*:
     description: Gives access to all commands found in Picturebook.
     children:
-      picturebook.filter: true
       picturebook.command: true
-      picturebook.add: true
+      picturebook.filter: true
       picturebook.list: true
+      picturebook.version: true
+      picturebook.add: true
       picturebook.reload: true
       picturebook.remove: true
-      picturebook.version: true
-  picturebook.filter:
-    description: Replaces keywords with their given replacement.
-    default: true
   picturebook.command:
-    description: Allows users to use the base Picturebook command.
+    description: Allows players to use the base Picturebook command.
+    default: true
+  picturebook.filter:
+    description: Changes player's chat using Picturebook's chat filters.
+    default: true
+  picturebook.list:
+    description: Allows players to view the Filter List.
+    default: true
+  picturebook.version:
+    description: Allows players to check Picturebook's version as well as other basic information.
     default: true
   picturebook.add:
-    description: Allows users to add replacements to the Filter List.
+    description: Allows players to add replacements to the Filter List.
     default: op
-  picturebook.list:
-    description: Allows users to view the Filter List.
-    default: true
   picturebook.reload:
-    description: Allows users to reload Picturebook's config.
+    description: Allows players to reload Picturebook's config.
     default: op
   picturebook.remove:
-    description: Allows users to remove replacement from the Filter List.
+    description: Allows players to remove replacements from the Filter List.
     default: op
-  picturebook.version:
-    description: Allows users to check Picturebook's version.
-    default: true

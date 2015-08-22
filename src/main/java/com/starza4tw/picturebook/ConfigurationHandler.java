@@ -8,7 +8,7 @@ import java.util.Set;
 import org.bukkit.ChatColor;
 import org.mcstats.Metrics;
 
-public class ConfigHandler 
+public class ConfigurationHandler 
 {
 	public static HashMap<String, String> FilterList = new HashMap<String, String>();
 	public static Object[] keyArray;

@@ -2,7 +2,7 @@ name: Picturebook
 description: Chat filter that replaces keywords with definable replacements. Built for SpigotMC.
 author: Starza4TW
 website: transcendencegaming.net
-version: 1.3.0.3
+version: 1.3.0.24
 main: com.starza4tw.picturebook.Main
 commands:
   picturebook:
@@ -17,22 +17,26 @@ permissions:
       picturebook.commandfilter: true
       picturebook.command: true
       picturebook.list: true
+      picturebook.namefilter: true
       picturebook.version: true
       picturebook.add: true
       picturebook.reload: true
       picturebook.remove: true
       picturebook.update: true
   picturebook.chatfilter:
-    description: Changes player's chat using Picturebook's chat filters.
+    description: Changes player's chat using Picturebook's replacement filters.
     default: true
   picturebook.commandfilter:
-    description: Changes player's commands using Picturebook's chat filters.
+    description: Changes player's commands using Picturebook's replacement filters.
     default: true
   picturebook.command:
     description: Allows players to use the base Picturebook command.
     default: true
   picturebook.list:
     description: Allows players to view the Filter List.
+    default: true
+  picturebook.namefilter:
+    description: Changes player's item's names using Picturebook's replacement filters.
     default: true
   picturebook.version:
     description: Allows players to check Picturebook's version as well as other basic information.

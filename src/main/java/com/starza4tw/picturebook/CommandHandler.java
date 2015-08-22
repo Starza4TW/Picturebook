@@ -1,7 +1,6 @@
 package com.starza4tw.picturebook;
 
-import net.md_5.bungee.api.ChatColor;
-
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -45,8 +44,8 @@ public class CommandHandler implements CommandExecutor
 						plugin.getConfig().set("Filter."+ args[1], args[2]);
 						plugin.saveConfig();
 						plugin.reloadConfig();
-						ConfigHandler.FilterList.clear();
-						ConfigHandler.RegisterFilter();
+						ConfigurationHandler.FilterList.clear();
+						ConfigurationHandler.RegisterFilter();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Added Replacement to Filter List!");
 						return true;
 					}
@@ -88,30 +87,30 @@ public class CommandHandler implements CommandExecutor
 						}
 					}
 					
-					if((pageNumber <= (Math.ceil((double)ConfigHandler.FilterList.size() / 10))) && (pageNumber != 0))
+					if((pageNumber <= (Math.ceil((double)ConfigurationHandler.FilterList.size() / 10))) && (pageNumber != 0))
 					{
-						if(ConfigHandler.valueArray.length > ((10 * pageNumber) - 1) && ConfigHandler.valueArray[(10 * pageNumber) - 1] != null)
+						if(ConfigurationHandler.valueArray.length > ((10 * pageNumber) - 1) && ConfigurationHandler.valueArray[(10 * pageNumber) - 1] != null)
 						{
 							endCount = (10 * pageNumber) - 1;
 						}
 						else
 						{
-							endCount = ConfigHandler.valueArray.length - 1;
+							endCount = ConfigurationHandler.valueArray.length - 1;
 						}
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook] - Filter List");
 						for(int Count = (10 * (pageNumber - 1)); Count <= endCount; Count++)
 						{
-							if(ChatColor.stripColor(ConfigHandler.valueArray[Count].toString()).length() == 0)
+							if(ChatColor.stripColor(ConfigurationHandler.valueArray[Count].toString()).length() == 0)
 							{
 								formatLabel = "FORMAT TEST";
 							}
-							else if(ChatColor.stripColor(ConfigHandler.valueArray[Count].toString()).length() > 0)
+							else if(ChatColor.stripColor(ConfigurationHandler.valueArray[Count].toString()).length() > 0)
 							{
 								formatLabel = "";
 							}
-							sender.sendMessage(ConfigHandler.keyArray[Count].toString() + ": " + ConfigHandler.valueArray[Count].toString() + formatLabel);
+							sender.sendMessage(ConfigurationHandler.keyArray[Count].toString() + ": " + ConfigurationHandler.valueArray[Count].toString() + formatLabel);
 						}
-						sender.sendMessage(ChatColor.GOLD + "[Picturebook] " + ChatColor.WHITE + "Showing page " + ChatColor.GREEN + pageNumber + ChatColor.WHITE + "/" + ChatColor.RED + ((int)Math.ceil((double)ConfigHandler.FilterList.size() / 10)) + ChatColor.AQUA + " [" + ConfigHandler.FilterList.size() + " Total Replacements]");
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook] " + ChatColor.WHITE + "Showing page " + ChatColor.GREEN + pageNumber + ChatColor.WHITE + "/" + ChatColor.RED + ((int)Math.ceil((double)ConfigurationHandler.FilterList.size() / 10)) + ChatColor.AQUA + " [" + ConfigurationHandler.FilterList.size() + " Total Replacements]");
 						return true;
 					}
 					else
@@ -131,8 +130,8 @@ public class CommandHandler implements CommandExecutor
 				if(sender.hasPermission("picturebook.reload") == true)
 				{
 					plugin.reloadConfig();
-					ConfigHandler.FilterList.clear();
-					ConfigHandler.RegisterFilter();
+					ConfigurationHandler.FilterList.clear();
+					ConfigurationHandler.RegisterFilter();
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Reloaded Configuration File.");
 					return true;
 				}
@@ -151,8 +150,8 @@ public class CommandHandler implements CommandExecutor
 						plugin.getConfig().set("Filter." + args[1], null);
 						plugin.saveConfig();
 						plugin.reloadConfig();
-						ConfigHandler.FilterList.clear();
-						ConfigHandler.RegisterFilter();
+						ConfigurationHandler.FilterList.clear();
+						ConfigurationHandler.RegisterFilter();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Removed Replacement from Filter List!");
 						return true;
 					}

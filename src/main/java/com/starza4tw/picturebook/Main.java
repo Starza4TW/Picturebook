@@ -1,10 +1,12 @@
 package com.starza4tw.picturebook;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class Main extends JavaPlugin
 {
@@ -16,11 +18,14 @@ public class Main extends JavaPlugin
 	{
 		plugin = this;
 		getCommand("picturebook").setExecutor(new CommandHandler(this));
-		getServer().getPluginManager().registerEvents(new FilterHandler(), this);	
-		saveDefaultConfig();
-		ConfigurationHandler.RegisterFilter();
-		ConfigurationHandler.initializeMetrics();
-		FilterHandler.renameTask.runTaskTimer(this, 0, 10);
+		getServer().getPluginManager().registerEvents(new FilterHandler(), this);
+		ConfigurationHandler.checkForConfigurationUpdate();
+		ConfigurationHandler.registerConfiguration();
+		if(getConfig().getBoolean("allowMetrics", true) == true)
+		{
+			initializeMetrics();
+		}
+		FilterHandler.renameTask.runTaskTimer(this, 0, getConfig().getInt("itemRenameTaskPeriod", 20));
 		if(UpdateHandler.getLatestVersion() == Main.getInstance().getDescription().getVersion())
 		{
 			logger.info(ChatColor.GOLD + "[Picturebook]" + ChatColor.BLUE +" Using Latest Version! Using Version: " + Main.getInstance().getDescription().getVersion());
@@ -37,6 +42,19 @@ public class Main extends JavaPlugin
 	{
 		Bukkit.getScheduler().cancelTasks(this);
 		logger.info(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " Picturebook " + getDescription().getVersion() + " has been disabled!");
+	}
+	
+	public static void initializeMetrics()
+	{
+		try 
+		{
+	        Metrics metrics = new Metrics((Main.getInstance()));
+	        metrics.start();
+	    }
+		catch (IOException exception) 
+		{
+			logger.severe(ChatColor.GOLD + "[Picturebook] " + ChatColor.RED + exception);
+	    }
 	}
 	
 	public static Main getInstance()

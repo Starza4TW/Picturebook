@@ -45,7 +45,7 @@ public class CommandHandler implements CommandExecutor
 						plugin.saveConfig();
 						plugin.reloadConfig();
 						ConfigurationHandler.FilterList.clear();
-						ConfigurationHandler.RegisterFilter();
+						ConfigurationHandler.registerConfiguration();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Added Replacement to Filter List!");
 						return true;
 					}
@@ -131,7 +131,7 @@ public class CommandHandler implements CommandExecutor
 				{
 					plugin.reloadConfig();
 					ConfigurationHandler.FilterList.clear();
-					ConfigurationHandler.RegisterFilter();
+					ConfigurationHandler.registerConfiguration();
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Reloaded Configuration File.");
 					return true;
 				}
@@ -151,7 +151,7 @@ public class CommandHandler implements CommandExecutor
 						plugin.saveConfig();
 						plugin.reloadConfig();
 						ConfigurationHandler.FilterList.clear();
-						ConfigurationHandler.RegisterFilter();
+						ConfigurationHandler.registerConfiguration();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Removed Replacement from Filter List!");
 						return true;
 					}

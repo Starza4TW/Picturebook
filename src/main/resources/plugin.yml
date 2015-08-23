@@ -2,7 +2,7 @@ name: Picturebook
 description: Chat filter that replaces keywords with definable replacements. Built for SpigotMC.
 author: Starza4TW
 website: transcendencegaming.net
-version: 1.3.0.24
+version: 1.3.0.31
 main: com.starza4tw.picturebook.Main
 commands:
   picturebook:
@@ -18,6 +18,7 @@ permissions:
       picturebook.command: true
       picturebook.list: true
       picturebook.namefilter: true
+      picturebook.signfilter: true
       picturebook.version: true
       picturebook.add: true
       picturebook.reload: true
@@ -37,6 +38,9 @@ permissions:
     default: true
   picturebook.namefilter:
     description: Changes player's item's names using Picturebook's replacement filters.
+    default: true
+  picturebook.signfilter:
+    description: Changes player's sign's text lines using Picturebook's replacement filters.
     default: true
   picturebook.version:
     description: Allows players to check Picturebook's version as well as other basic information.

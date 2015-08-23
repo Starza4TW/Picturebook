@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -47,27 +48,45 @@ public class FilterHandler implements Listener
 	}
 	
 	@EventHandler
-	public void onInventoryOpen(InventoryOpenEvent invOpenEvent)
+	public void onInventoryOpen(InventoryOpenEvent inventoryOpenEvent)
 	{
-		if(invOpenEvent.getInventory().getType() == InventoryType.ANVIL)
+		if(inventoryOpenEvent.getInventory().getType() == InventoryType.ANVIL)
 		{
-			if(invOpenEvent.getPlayer().hasPermission("picturebook.namefilter"))
+			if(inventoryOpenEvent.getPlayer().hasPermission("picturebook.namefilter") == true)
 			{
-				openAnvilInventories.add(invOpenEvent.getInventory());
+				openAnvilInventories.add(inventoryOpenEvent.getInventory());
 			}
 		}
 	}
 
 	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent invCloseEvent)
+	public void onInventoryClose(InventoryCloseEvent inventoryCloseEvent)
 	{
-		if(invCloseEvent.getInventory().getType() == InventoryType.ANVIL)
+		if(inventoryCloseEvent.getInventory().getType() == InventoryType.ANVIL)
 		{
-			if(invCloseEvent.getPlayer().hasPermission("picturebook.namefilter"))
+			if(inventoryCloseEvent.getPlayer().hasPermission("picturebook.namefilter") == true)
 			{
-				if(openAnvilInventories.contains(invCloseEvent.getInventory()))
+				if(openAnvilInventories.contains(inventoryCloseEvent.getInventory()))
 				{
-					openAnvilInventories.remove(invCloseEvent.getInventory());
+					openAnvilInventories.remove(inventoryCloseEvent.getInventory());
+				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onSignChange(SignChangeEvent signChangeEvent)
+	{
+		if(signChangeEvent.getPlayer().hasPermission("picturebook.signfilter") == true)
+		{
+			for(int line = 0; line <= 3; line++)
+			{
+				for(String Key : ConfigurationHandler.FilterList.keySet())
+				{
+					if(signChangeEvent.getLine(line).toLowerCase().contains(Key.toLowerCase()))
+					{
+						signChangeEvent.setLine(line, signChangeEvent.getLine(line).replaceAll("(?i)" + Key, ConfigurationHandler.FilterList.get(Key)));
+					}
 				}
 			}
 		}

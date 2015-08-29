@@ -1,9 +1,11 @@
 # Default Configuration File for Picturebook
 # Picturebook by Starza4TW
-
-# Do not Change/Mess with/Remove/etc. this line! BAD THINGS WILL HAPPEN!
-configRevision: 1
-
+# Do NOT change this value. BAD THINGS WILL HAPPEN!
+# Changing values outside the Filter node REQUIRES a server restart! A config reload will not change these values within the plugin!
+# Do NOT change the configRevision node. BAD THINGS WILL HAPPEN!
+configRevision: 2
+allowMetrics: true
+itemRenameTaskPeriod: 10
 Filter:
   <black>: §0
   <dark_blue>: §1
@@ -32,3 +34,8 @@ Filter:
   <lenny>: ( ͡° ͜ʖ ͡°)
   <star>: ☆
   <3: ❤
+  <comet>: ☄
+  <radioactive>: ☢
+  <peace>: ☮
+  <yin-yang>: ☯
+  <snowflake>: ❄

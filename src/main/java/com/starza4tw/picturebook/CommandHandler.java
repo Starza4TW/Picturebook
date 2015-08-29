@@ -1,7 +1,6 @@
 package com.starza4tw.picturebook;
 
-import net.md_5.bungee.api.ChatColor;
-
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,15 +18,15 @@ public class CommandHandler implements CommandExecutor
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) 
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] arguments) 
 	{
-		if (cmd.getName().equalsIgnoreCase("picturebook")) 
+		if (command.getName().equalsIgnoreCase("picturebook")) 
 		{
-			if(args.length == 0 || args[0].equalsIgnoreCase("help"))
+			if(arguments.length == 0 || arguments[0].equalsIgnoreCase("help"))
 			{
 				if(sender.hasPermission("picturebook.command") == true)
 				{
-					sender.sendMessage(new String[] {ChatColor.GOLD + "[Picturebook (pb) - Help]", ChatColor.BLUE + "/picturebook add [Filter] [Replacement] - " + ChatColor.WHITE + "Adds a filter for Picturebook to search for.", ChatColor.BLUE + "/picturebook list [Page] - " + ChatColor.WHITE + "Lists filtered words and their replacements.", ChatColor.BLUE + "/picturebook reload - " + ChatColor.WHITE + "Reloads Picturebook's config.", ChatColor.BLUE + "/picturebook remove [Filter] " + ChatColor.WHITE + "Removes a Filter from Picturebook's Filter List.", ChatColor.BLUE + "/picturebook version - " + ChatColor.WHITE + "Lists basic information about Picturebook."});
+					sender.sendMessage(new String[] {ChatColor.GOLD + "[Picturebook (pb) - Help]", ChatColor.BLUE + "/picturebook add [Filter] [Replacement] - " + ChatColor.WHITE + "Adds a filter for Picturebook to search for.", ChatColor.BLUE + "/picturebook list (Page) - " + ChatColor.WHITE + "Lists filtered words and their replacements.", ChatColor.BLUE + "/picturebook reload - " + ChatColor.WHITE + "Reloads Picturebook's config.", ChatColor.BLUE + "/picturebook remove [Filter] " + ChatColor.WHITE + "Removes a Filter from Picturebook's Filter List.", ChatColor.BLUE + "/picturebook update - " + ChatColor.WHITE + "Check for updates of Picturebook.", ChatColor.BLUE + "/picturebook version - " + ChatColor.WHITE + "Lists basic information about Picturebook."});
 					return true;
 				}
 				else if(sender.hasPermission("picturebook.command") == false)
@@ -36,17 +35,17 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("add"))
+			else if(arguments[0].equalsIgnoreCase("add"))
 			{
 				if(sender.hasPermission("picturebook.add") == true)
 				{
-					if((args != null) && (args.length == 3))
+					if((arguments != null) && (arguments.length == 3))
 					{
-						plugin.getConfig().set("Filter."+ args[1], args[2]);
+						plugin.getConfig().getConfigurationSection("Filter").set(arguments[1], arguments[2]);
 						plugin.saveConfig();
 						plugin.reloadConfig();
-						ConfigHandler.FilterList.clear();
-						ConfigHandler.RegisterFilter();
+						ConfigurationHandler.FilterList.clear();
+						ConfigurationHandler.registerConfiguration();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Added Replacement to Filter List!");
 						return true;
 					}
@@ -62,53 +61,57 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("list"))
+			else if(arguments[0].equalsIgnoreCase("list"))
 			{
 				if(sender.hasPermission("picturebook.list") == true)
 				{
-					if((args != null) && (args.length == 2))
+					if(arguments.length >= 3)
+					{
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" Please list the correct number of arguments!");
+						return true;
+					}
+					else if(arguments.length == 1)
+					{
+						pageNumber = 1;
+					}
+					else if(arguments.length == 2)
 					{
 						try
 						{
-							pageNumber = Integer.parseInt(args[1]);
+							pageNumber = Integer.parseInt(arguments[1]);
 						}
 						catch(NumberFormatException exception)
 						{
 							sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " Please input an Integer greater than 0 for the page number!");
 							return true;
 						}
-						
-						if((pageNumber <= (Math.ceil((double)ConfigHandler.FilterList.size() / 10))) && (pageNumber != 0))
+					}
+					
+					if((pageNumber <= (Math.ceil((double)ConfigurationHandler.FilterList.size() / 10))) && (pageNumber != 0))
+					{
+						if(ConfigurationHandler.valueArray.length > ((10 * pageNumber) - 1) && ConfigurationHandler.valueArray[(10 * pageNumber) - 1] != null)
 						{
-							if(ConfigHandler.valueArray.length > ((10 * pageNumber) - 1) && ConfigHandler.valueArray[(10 * pageNumber) - 1] != null)
-							{
-								endCount = (10 * pageNumber) - 1;
-							}
-							else
-							{
-								endCount = ConfigHandler.valueArray.length - 1;
-							}
-							sender.sendMessage(ChatColor.GOLD + "[Picturebook] - Filter List");
-							for(int Count = (10 * (pageNumber - 1)); Count <= endCount; Count++)
-							{
-								if(ChatColor.stripColor(ConfigHandler.valueArray[Count].toString()).length() == 0)
-								{
-									formatLabel = "FORMAT TEST";
-								}
-								else if(ChatColor.stripColor(ConfigHandler.valueArray[Count].toString()).length() > 0)
-								{
-									formatLabel = "";
-								}
-								sender.sendMessage(ConfigHandler.keyArray[Count].toString() + ": " + ConfigHandler.valueArray[Count].toString() + formatLabel);
-							}
-							sender.sendMessage(ChatColor.GOLD + "[Picturebook] " + ChatColor.WHITE + "Showing page " + ChatColor.GREEN + pageNumber + ChatColor.WHITE + "/" + ChatColor.RED + ((int)Math.ceil((double)ConfigHandler.FilterList.size() / 10)) + ChatColor.AQUA + " [" + ConfigHandler.FilterList.size() + " Total Replacements]");
-							return true;
+							endCount = (10 * pageNumber) - 1;
 						}
 						else
 						{
-							sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED + " Please input an Integer greater than 0 for the page number!");
-							return true;
+							endCount = ConfigurationHandler.valueArray.length - 1;
 						}
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook] - Filter List");
+						for(int Count = (10 * (pageNumber - 1)); Count <= endCount; Count++)
+						{
+							if(ChatColor.stripColor(ConfigurationHandler.valueArray[Count].toString()).length() == 0)
+							{
+								formatLabel = "FORMAT TEST";
+							}
+							else if(ChatColor.stripColor(ConfigurationHandler.valueArray[Count].toString()).length() > 0)
+							{
+								formatLabel = "";
+							}
+							sender.sendMessage(ConfigurationHandler.keyArray[Count].toString() + ": " + ConfigurationHandler.valueArray[Count].toString() + formatLabel);
+						}
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook] " + ChatColor.WHITE + "Showing page " + ChatColor.GREEN + pageNumber + ChatColor.WHITE + "/" + ChatColor.RED + ((int)Math.ceil((double)ConfigurationHandler.FilterList.size() / 10)) + ChatColor.AQUA + " [" + ConfigurationHandler.FilterList.size() + " Total Replacements]");
+						return true;
 					}
 					else
 					{
@@ -122,13 +125,13 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("reload"))
+			else if(arguments[0].equalsIgnoreCase("reload"))
 			{
 				if(sender.hasPermission("picturebook.reload") == true)
 				{
 					plugin.reloadConfig();
-					ConfigHandler.FilterList.clear();
-					ConfigHandler.RegisterFilter();
+					ConfigurationHandler.FilterList.clear();
+					ConfigurationHandler.registerConfiguration();
 					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Reloaded Configuration File.");
 					return true;
 				}
@@ -138,17 +141,17 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("remove"))
+			else if(arguments[0].equalsIgnoreCase("remove"))
 			{
 				if(sender.hasPermission("picturebook.remove") == true)
 				{
-					if((args != null) && (args.length == 2))
+					if((arguments != null) && (arguments.length == 2))
 					{
-						plugin.getConfig().set("Filter." + args[1], null);
+						plugin.getConfig().getConfigurationSection("Filter").set(arguments[1], null);
 						plugin.saveConfig();
 						plugin.reloadConfig();
-						ConfigHandler.FilterList.clear();
-						ConfigHandler.RegisterFilter();
+						ConfigurationHandler.FilterList.clear();
+						ConfigurationHandler.registerConfiguration();
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.WHITE + " Removed Replacement from Filter List!");
 						return true;
 					}
@@ -164,7 +167,28 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("version"))
+			else if(arguments[0].equalsIgnoreCase("update"))
+			{
+				if(sender.hasPermission("picturebook.update") == true)
+				{
+					if(UpdateHandler.getLatestVersion() == Main.getInstance().getDescription().getVersion())
+					{
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.BLUE +" Using Latest Version! Using Version: " + Main.getInstance().getDescription().getVersion());
+						return true;
+					}
+					else if(UpdateHandler.getLatestVersion() != Main.getInstance().getDescription().getVersion())
+					{
+						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.BLUE +" Either you are using a dev build, or an update was found! Found Version: " + UpdateHandler.getLatestVersion());
+						return true;
+					}
+				}
+				else if(sender.hasPermission("picturebook.update") == false)
+				{
+					sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" You don't have the permission to do that!");
+					return true;
+				}
+			}
+			else if(arguments[0].equalsIgnoreCase("version"))
 			{
 				if(sender.hasPermission("picturebook.version") == true)
 				{

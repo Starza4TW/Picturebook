@@ -18,11 +18,11 @@ public class CommandHandler implements CommandExecutor
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) 
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] arguments) 
 	{
 		if (command.getName().equalsIgnoreCase("picturebook")) 
 		{
-			if(args.length == 0 || args[0].equalsIgnoreCase("help"))
+			if(arguments.length == 0 || arguments[0].equalsIgnoreCase("help"))
 			{
 				if(sender.hasPermission("picturebook.command") == true)
 				{
@@ -35,13 +35,13 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("add"))
+			else if(arguments[0].equalsIgnoreCase("add"))
 			{
 				if(sender.hasPermission("picturebook.add") == true)
 				{
-					if((args != null) && (args.length == 3))
+					if((arguments != null) && (arguments.length == 3))
 					{
-						plugin.getConfig().set("Filter."+ args[1], args[2]);
+						plugin.getConfig().getConfigurationSection("Filter").set(arguments[1], arguments[2]);
 						plugin.saveConfig();
 						plugin.reloadConfig();
 						ConfigurationHandler.FilterList.clear();
@@ -61,24 +61,24 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("list"))
+			else if(arguments[0].equalsIgnoreCase("list"))
 			{
 				if(sender.hasPermission("picturebook.list") == true)
 				{
-					if(args.length >= 3)
+					if(arguments.length >= 3)
 					{
 						sender.sendMessage(ChatColor.GOLD + "[Picturebook]" + ChatColor.RED +" Please list the correct number of arguments!");
 						return true;
 					}
-					else if(args.length == 1)
+					else if(arguments.length == 1)
 					{
 						pageNumber = 1;
 					}
-					else if(args.length == 2)
+					else if(arguments.length == 2)
 					{
 						try
 						{
-							pageNumber = Integer.parseInt(args[1]);
+							pageNumber = Integer.parseInt(arguments[1]);
 						}
 						catch(NumberFormatException exception)
 						{
@@ -125,7 +125,7 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("reload"))
+			else if(arguments[0].equalsIgnoreCase("reload"))
 			{
 				if(sender.hasPermission("picturebook.reload") == true)
 				{
@@ -141,13 +141,13 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("remove"))
+			else if(arguments[0].equalsIgnoreCase("remove"))
 			{
 				if(sender.hasPermission("picturebook.remove") == true)
 				{
-					if((args != null) && (args.length == 2))
+					if((arguments != null) && (arguments.length == 2))
 					{
-						plugin.getConfig().set("Filter." + args[1], null);
+						plugin.getConfig().getConfigurationSection("Filter").set(arguments[1], null);
 						plugin.saveConfig();
 						plugin.reloadConfig();
 						ConfigurationHandler.FilterList.clear();
@@ -167,7 +167,7 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("update"))
+			else if(arguments[0].equalsIgnoreCase("update"))
 			{
 				if(sender.hasPermission("picturebook.update") == true)
 				{
@@ -188,7 +188,7 @@ public class CommandHandler implements CommandExecutor
 					return true;
 				}
 			}
-			else if(args[0].equalsIgnoreCase("version"))
+			else if(arguments[0].equalsIgnoreCase("version"))
 			{
 				if(sender.hasPermission("picturebook.version") == true)
 				{

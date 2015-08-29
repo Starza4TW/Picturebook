@@ -1,6 +1,11 @@
 # Default Configuration File for Picturebook
 # Picturebook by Starza4TW
-
+# Do NOT change this value. BAD THINGS WILL HAPPEN!
+# Changing values outside the Filter node REQUIRES a server restart! A config reload will not change these values within the plugin!
+# Do NOT change the configRevision node. BAD THINGS WILL HAPPEN!
+configRevision: 2
+allowMetrics: true
+itemRenameTaskPeriod: 10
 Filter:
   <black>: §0
   <dark_blue>: §1
@@ -33,14 +38,4 @@ Filter:
   <radioactive>: ☢
   <peace>: ☮
   <yin-yang>: ☯
-
-# Changing the following values REQUIRES a server restart! A config reload will not change these values within the plugin!
-  
-# Allows Picturebook to send it's individual McStats/Metrics information to the McStats servers. Global opt-out is found in plugins/PluginMetrics/config.yml.
-allowMetrics: true
-
-# Period between checks of the Anvil Item Name Filtering Task System. Given in server ticks, where 20 ticks = 1 second.
-itemRenameTaskPeriod: 10
-
-# Do not Change/Mess with/Remove/etc. this line! BAD THINGS WILL HAPPEN!
-configRevision: 2
+  <snowflake>: ❄

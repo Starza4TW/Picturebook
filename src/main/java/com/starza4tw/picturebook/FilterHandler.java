@@ -35,13 +35,16 @@ public class FilterHandler implements Listener
 	@EventHandler
 	public void onPlayerCommand(PlayerCommandPreprocessEvent commandEvent)
 	{
-		if(commandEvent.getPlayer().hasPermission("picturebook.commandfilter") == true)
+		if(commandEvent.getMessage().startsWith("/pb remove") == false && commandEvent.getMessage().startsWith("/picturebook remove") == false)
 		{
-			for(String Key : ConfigurationHandler.FilterList.keySet())
+			if(commandEvent.getPlayer().hasPermission("picturebook.commandfilter") == true)
 			{
-				if(commandEvent.getMessage().toLowerCase().contains(Key.toLowerCase()))
+				for(String Key : ConfigurationHandler.FilterList.keySet())
 				{
-					commandEvent.setMessage(commandEvent.getMessage().replaceAll("(?i)" + Key, ConfigurationHandler.FilterList.get(Key)));
+					if(commandEvent.getMessage().toLowerCase().contains(Key.toLowerCase()))
+					{
+						commandEvent.setMessage(commandEvent.getMessage().replaceAll("(?i)" + Key, ConfigurationHandler.FilterList.get(Key)));
+					}
 				}
 			}
 		}
